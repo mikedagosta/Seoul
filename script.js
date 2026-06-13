@@ -1,26 +1,7 @@
-const header = document.querySelector('.site-header');
-const toggle = document.querySelector('.nav-toggle');
-const links = document.querySelector('.nav-links');
 
-document.getElementById('year').textContent = new Date().getFullYear();
-
-window.addEventListener('scroll', () => {
-  header.classList.toggle('scrolled', window.scrollY > 24);
-});
-
-toggle.addEventListener('click', () => {
-  const isOpen = links.classList.toggle('open');
-  toggle.setAttribute('aria-expanded', isOpen);
-});
-
-links.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => links.classList.remove('open'));
-});
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('visible');
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click', e=>{
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'});}
   });
-}, { threshold: 0.14 });
-
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+});
